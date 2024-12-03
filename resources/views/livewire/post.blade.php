@@ -101,13 +101,13 @@
                                 </td>
                                 <td>
                                     @if (empty($showTitle[$model->id]))
-                                        <span class="d-inline-block text-truncate" style="max-width: 200px;"
-                                            title="{{ $model->title }}">
-                                            {{ Str::limit($model->title, 60) }}
-                                        </span>
+                                    <span class="d-inline-block text-truncate" style="max-width: 200px;"
+                                        title="{{ $model->title }}">
+                                        {{ Str::limit($model->title, 60) }}
+                                    </span>
                                     @endif
                                     @if (strlen($model->title) > 60)
-                                        <a href="javascript:void(0);" class="view-link"
+                                    <a href="javascript:void(0);" class="view-link"
                                             wire:click="toggleTitle({{ $model->id }})">View</a>
                                     @endif
                                     @if (isset($showTitle[$model->id]) && $showTitle[$model->id])
@@ -115,13 +115,13 @@
                                     @endif
                                 <td>
                                     @if (empty($showTitle[$model->id]))
-                                        <span class="d-inline-block text-truncate" style="max-width: 200px;"
-                                            title="{{ $model->description }}">
-                                            {{ Str::limit($model->description, 60) }}
-                                        </span>
+                                    <span class="d-inline-block text-truncate" style="max-width: 200px;"
+                                        title="{{ $model->description }}">
+                                        {{ Str::limit($model->description, 60) }}
+                                    </span>
                                     @endif
                                     @if (strlen($model->description) > 60)
-                                        <a href="javascript:void(0);" class="view-link"
+                                    <a href="javascript:void(0);" class="view-link"
                                             wire:click="toggleDescription({{ $model->id }})">View</a>
                                     @endif
                                     @if (isset($showDescription[$model->id]) && $showDescription[$model->id])
@@ -130,10 +130,10 @@
                                 </td>
                                 <td>
                                     @if (empty($showText[$model->id]))
-                                        <span class="d-inline-block text-truncate" style="max-width: 200px;"
-                                            title="{{ $model->text }}">
-                                            {{ Str::limit($model->text, 60) }}
-                                        </span>
+                                    <span class="d-inline-block text-truncate" style="max-width: 200px;"
+                                        title="{{ $model->text }}">
+                                        {{ Str::limit($model->text, 60) }}
+                                    </span>
                                     @endif
                                     @if (strlen($model->text) > 60)
                                         <a href="javascript:void(0);" class="view-link"
@@ -218,10 +218,8 @@
                             </tr>
                         @endif
                     @endforeach
-                </table>
+                </table> 
             </div>
-
-            {{ $models->links() }}
         </div>
     @endif
 

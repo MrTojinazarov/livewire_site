@@ -7,12 +7,10 @@ use App\Models\Post;
 use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Livewire\WithPagination;
 
 class PostComponent extends Component
 {
     use WithFileUploads;
-    use WithPagination;
 
     public $models;
     public $categories;
@@ -58,7 +56,7 @@ class PostComponent extends Component
 
     public function all()
     {
-        $this->models = Post::paginate(10);
+        $this->models = Post::all();
         $this->categories = Category::all();
         return [$this->models, $this->categories];
     }
