@@ -65,6 +65,14 @@
                                 </p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="/davomat" wire:navigate class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Davomat
+                                </p>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </div>
