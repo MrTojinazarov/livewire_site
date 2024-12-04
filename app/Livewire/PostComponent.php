@@ -4,15 +4,15 @@ namespace App\Livewire;
 
 use App\Models\Category;
 use App\Models\Post;
-use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 
 class PostComponent extends Component
 {
+    use WithPagination;
     use WithFileUploads;
 
-    public $models;
     public $categories;
     public $activeCreate = false;
     public $editFormPost = false;
@@ -51,19 +51,17 @@ class PostComponent extends Component
 
     public function mount()
     {
-        $this->all();
-    }
-
-    public function all()
-    {
-        $this->models = Post::all();
         $this->categories = Category::all();
-        return [$this->models, $this->categories];
     }
 
     public function render()
     {
-        return view('livewire.post');
+        $posts = Post::latest()->paginate(2);
+
+        return view('livewire.post', [
+            'models' => $posts,
+            'categories' => $this->categories
+        ]);
     }
 
     public function CreateModal()
@@ -83,31 +81,32 @@ class PostComponent extends Component
                 $folder = "pictures";
                 $filename = $date->format('YmdHisv') . '.' . $ext;
 
-
                 $path = $this->img->storeAs($folder, $filename, 'public');
 
                 $validatedData['img'] = $path;
             }
 
-
             Post::create($validatedData);
 
             session()->flash('message', 'Post created successfully!');
-            $this->all();
+            $this->resetForm();
         }
+    }
+
+    public function resetForm()
+    {
         $this->category_id = '';
         $this->title = '';
         $this->description = '';
         $this->text = '';
         $this->img = '';
         $this->activeCreate = false;
-        $this->all();
     }
 
     public function delete(Post $post)
     {
         $post->delete();
-        $this->all();
+        session()->flash('message', 'Post deleted successfully!');
     }
 
     public function editForm(Post $post)
@@ -130,13 +129,12 @@ class PostComponent extends Component
             $folder = "pictures";
             $filename = $date->format('YmdHisv') . '.' . $ext;
 
-
             $path = $this->editImg->storeAs($folder, $filename, 'public');
-
             $this->editImg = $path;
-        }else{
+        } else {
             $this->editImg = $post->img;
         }
+
         $post->update([
             'category_id' => $this->editCategory_id,
             'title' => $this->editTitle,
@@ -145,34 +143,20 @@ class PostComponent extends Component
             'img' => $this->editImg,
         ]);
         $this->editFormPost = false;
-        $this->all();
     }
 
     public function toggleDescription($id)
     {
-        if (isset($this->showDescription[$id]) && $this->showDescription[$id] === true) {
-            $this->showDescription[$id] = false;
-        } else {
-            $this->showDescription[$id] = true;
-        }
+        $this->showDescription[$id] = !$this->showDescription[$id];
     }
 
     public function toggleText($id)
     {
-        if (isset($this->showText[$id]) && $this->showText[$id] === true) {
-            $this->showText[$id] = false;
-        } else {
-            $this->showText[$id] = true;
-        }
+        $this->showText[$id] = !$this->showText[$id];
     }
 
     public function toggleTitle($id)
     {
-        if (isset($this->showTitle[$id]) && $this->showTitle[$id] === true) {
-            $this->showTitle[$id] = false;
-        } else {
-            $this->showTitle[$id] = true;
-        }
+        $this->showTitle[$id] = !$this->showTitle[$id];
     }
-
 }

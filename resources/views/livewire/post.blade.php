@@ -1,6 +1,6 @@
 <div>
     <div class="ms-1">
-        <h2 style="color:rgb(25, 53, 80)">The Catyegories Page</h2>
+        <h2 style="color:rgb(25, 53, 80)">The Posts Page</h2>
         <button class="btn btn-outline-success mt-2" wire:click="CreateModal"
             style="width: 120px; height: auto;font-size: 20px; border-radius: 10px;">
             {{ $activeCreate ? 'Cancel' : 'Create' }}
@@ -23,7 +23,7 @@
                             <label for="category_id">Category:</label>
                             <select wire:model="category_id" class="form-control"
                                 wire:blur="validateOnBlur('category_id')" required>
-                                <option value="" disabled selected>Select a Category</option>
+                                <option value="" selected>Select a Category</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
@@ -218,8 +218,14 @@
                             </tr>
                         @endif
                     @endforeach
-                </table> 
+                </table>
             </div>
+            <div class="d-flex justify-content-center mt-4">
+                <nav>
+                    {{ $models->links('pagination::bootstrap-5') }}
+                </nav>
+            </div>
+            
         </div>
     @endif
 
